@@ -7,7 +7,7 @@ public class BulletShotFromBond : MonoBehaviour {
 	public float shootCooldown=0f;
 	private Animator anim;
 	public BondMoving bond;
-	public int bulletsCount;
+	public int bulletsCount=10;
 	public int maxBulletsCount = 10;
 	public int AllBulletsCount=150;
 	public bool nowIsReload=false;
@@ -16,20 +16,20 @@ public class BulletShotFromBond : MonoBehaviour {
 	BondFlying bondFly;
 	public GUISkin myskin;
 	public AudioClip myaudio;
-
+	
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
 		shootCooldown=0f;
 		bulletsCount=maxBulletsCount;
-
+		
 	}
 	
 	void Update () {
 		nadeThrow = GetComponent<NadeThrowing> ();
 		bondFly = GetComponent<BondFlying> ();
 		var currentState = anim.GetCurrentAnimatorStateInfo (0);
-
+		
 		if (shootCooldown > 0) {
 			shootCooldown -= Time.deltaTime;
 		}
@@ -42,7 +42,7 @@ public class BulletShotFromBond : MonoBehaviour {
 			anim.SetBool("IsShoot",false);
 			nowIsShoot = false;
 		}
-
+		
 		if (nowIsShoot && bulletsCount>0) {
 			Attack();
 		}
@@ -60,15 +60,17 @@ public class BulletShotFromBond : MonoBehaviour {
 		else
 			nowIsReload=false;
 	}
-
+	public void bulletsChange(){
+		bulletsCount--;
+		AllBulletsCount--;
+	}
 	public void Attack(){
-
+		
 		nadeThrow = GetComponent<NadeThrowing> ();
 		bondFly = GetComponent<BondFlying> ();
 		if (bond.bondHp>0 && CanShoot && !nowIsReload && !nadeThrow.NowIsThrowing && !bondFly.isFlying) {
 			audio.PlayOneShot (myaudio);
-			bulletsCount--;
-			AllBulletsCount--;
+			bulletsChange();
 			shootCooldown=shootRate;
 			var shootTransform=Instantiate(shootPrefab) as Transform;
 			if(bond.facingRight){
@@ -79,13 +81,13 @@ public class BulletShotFromBond : MonoBehaviour {
 			}
 		}
 	}
-
+	
 	public bool CanShoot{
 		get{
 			return shootCooldown<=0f;
 		}
 	}
-
+	
 	void OnGUI(){
 		GUI.color = Color.red;
 		GUI.skin = myskin;
@@ -94,3 +96,5 @@ public class BulletShotFromBond : MonoBehaviour {
 		}
 	}
 }
+
+

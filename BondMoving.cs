@@ -10,7 +10,7 @@ public class BondMoving : MonoBehaviour {
 	public bool loadingLevel=false;
 	public bool deadwindow=false;
 	public bool isShooting;
-	public int bondHp;
+	public int bondHp=10;
 	public int bondHpMax;
 	public float loadingTime = 0f;
 	public float maxSpeed = 2.5f;
@@ -26,7 +26,7 @@ public class BondMoving : MonoBehaviour {
 	private Animator anim;
 	public GUISkin mySkin;
 	public Texture2D[] toolBar;
-
+	public float running=0f;
 
 
 	// Use this for initialization
@@ -34,9 +34,11 @@ public class BondMoving : MonoBehaviour {
 		anim=GetComponent<Animator>();
 		bondHpMax = bondHp;
 	}
-
-	public void Flip(){
+	public void changeFacing(){
 		facingRight = !facingRight;
+	}
+	public void Flip(){
+		changeFacing ();
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
@@ -116,7 +118,7 @@ public class BondMoving : MonoBehaviour {
 			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
 			onEnemyHead = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsEnemyHead);
 			move = Input.GetAxis ("Horizontal");
-			anim.SetFloat ("Speed", Mathf.Abs (move));
+			anim.SetFloat ("Speed", Mathf.Abs(move));
 			anim.SetFloat ("vSpeed", rigidbody2D.velocity.y);
 			BulletShotFromBond shoot = GetComponent<BulletShotFromBond> ();
 			NadeThrowing nadeThrow = GetComponent<NadeThrowing> ();

@@ -35,8 +35,8 @@ public class BulletShootFromEnemy : MonoBehaviour {
 			inSwap=false;
 		}
 	}
-
-	void Update () {
+	 
+	public void Update () {
 		RaycastHit2D hit=Physics2D.Raycast(new Vector2(transform.position.x,transform.position.y+0.2f),new Vector2(enemyMoving.orientation,0),3.5f,whatToHit);
 		RaycastHit2D hitback=Physics2D.Raycast(new Vector2(transform.position.x,transform.position.y+0.2f),new Vector2(-enemyMoving.orientation,0),1.5f,whatToHit);
 

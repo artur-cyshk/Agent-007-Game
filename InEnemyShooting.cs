@@ -22,7 +22,6 @@ public class InEnemyShooting : MonoBehaviour {
 			collider2D.isTrigger=true;
 			GameObject.Destroy(head);
 		}
-
 	}
 
 	// Use this for initialization
@@ -39,6 +38,7 @@ public class InEnemyShooting : MonoBehaviour {
 			BulletMove bullet=col.gameObject.GetComponent<BulletMove>();	
 			if(bullet != null){
 				Damage (bullet.damage);
+
 			}
 		}
 		if (col.gameObject.tag == "nade") {
